@@ -1,3 +1,5 @@
 # May-I-Tech
 Kasa/POS terminali, ERP tabanlı akıllı stok yönetim sistemi, dinamik rezervasyon ve randevu modüllerinin anlatıldığı ve müşteriye pazarlandığı bir web sitesi
+
+
 Perakende ve hizmet sektöründeki işletmelerin uçtan uca dijital dönüşüm süreçlerini yönetmek amacıyla; Kasa/POS terminali, ERP tabanlı akıllı stok yönetim sistemi, dinamik rezervasyon ve randevu modüllerini tek bir potada eriten kurumsal bir B2B SaaS platformu tasarladım. Nesne Yönelimli Programlama (OOP) prensipleri ve katmanlı yazılım mimarisi kullanarak Python ve CustomTkinter altyapısıyla geliştirdiğim bu ekosistemde, işletmelerin finansal operasyonlarını, anlık envanter hareketlerini ve müşteri randevularını senkronize bir şekilde yönetmesini sağladım. Platformun tüm bu modüllerini, mimari kabiliyetlerini ve kurumsal çözümlerini potansiyel müşterilere interaktif olarak sunan modern ve ölçeklenebilir resmi May I Tech web sitesini de bu ürün ekosisteminin bir parçası olarak başarıyla hayata geçirdim.
