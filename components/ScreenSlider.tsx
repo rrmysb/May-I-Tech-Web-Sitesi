@@ -274,32 +274,34 @@ export default function ScreenSlider() {
       <AnimatePresence>
         {selectedService && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-[#0F172A]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto">
-            <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }} className="bg-white border border-slate-200 max-w-4xl w-full rounded-3xl p-6 md:p-10 relative shadow-2xl flex flex-col md:flex-row gap-6 md:gap-8 text-[#1E293B] max-h-[90vh] overflow-y-auto md:overflow-y-visible">
+            {/* Modal genişliğini max-w-4xl'den max-w-6xl'e yükselterek devasa bir alan kazandık */}
+            <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }} className="bg-white border border-slate-200 max-w-6xl w-full rounded-3xl p-6 md:p-8 relative shadow-2xl flex flex-col md:flex-row gap-6 md:gap-8 text-[#1E293B] max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
               
               {/* Kapatma Butonu */}
               <button onClick={() => setSelectedService(null)} className="absolute right-4 top-4 w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-100 text-[#475569] flex items-center justify-center hover:bg-slate-200 transition-colors z-20">
                 <Icons.X className="w-5 h-5" />
               </button>
 
-              {/* SOL TARAF: AYDINLIK YATAY RESİM GEÇİŞ ALANI */}
-              <div className="flex-1 flex flex-col justify-center items-center bg-slate-50 rounded-2xl p-4 border border-slate-200/60 min-h-[220px] md:min-h-[250px] relative">
+              {/* SOL TARAF: AYDINLIK DEV GÖRSEL ALANI ( flex-[1.5] ile görsele daha fazla genişlik verdik ) */}
+              <div className="flex-[1.5] flex flex-col justify-center items-center bg-slate-100/50 rounded-2xl p-3 md:p-5 border border-slate-200/60 min-h-[300px] md:min-h-[500px] relative">
                 {selectedService.images && selectedService.images.length > 0 ? (
                   <div className="w-full h-full flex flex-col items-center justify-center relative">
-                    <div className="w-full h-40 md:h-44 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-xs text-slate-400 overflow-hidden relative shadow-sm">
+                    {/* Yüksekliği h-40'tan mobilde h-64, masaüstünde h-[480px] seviyesine çıkardık */}
+                    <div className="w-full h-64 md:h-[440px] lg:h-[480px] bg-white border border-slate-200/80 rounded-xl flex items-center justify-center text-xs text-slate-400 overflow-hidden relative shadow-sm">
                       
                       {/* Spinner Yüklenme Animasyonu */}
                       {imageLoading && !imageError && (
                         <div className="absolute inset-0 flex items-center justify-center bg-slate-50 z-10">
-                          <Icons.Loader2 className="w-6 h-6 animate-spin text-[#00B4D8]" />
+                          <Icons.Loader2 className="w-8 h-8 animate-spin text-[#00B4D8]" />
                         </div>
                       )}
 
-                      {/* Ana Görsel Elementi */}
+                      {/* Ana Görsel Elementi: object-contain sayesinde görseller asla yamulmaz veya kesilmez */}
                       {!imageError ? (
                         <img 
                           src={getImagePath(selectedService.images[activeImageIdx])} 
                           alt={`${selectedService.title} Arayüz`} 
-                          className="object-cover w-full h-full"
+                          className="object-contain w-full h-full p-2 md:p-4"
                           onLoad={() => setImageLoading(false)}
                           onError={() => {
                             setImageError(true);
@@ -308,9 +310,9 @@ export default function ScreenSlider() {
                         />
                       ) : (
                         <div className="flex flex-col items-center justify-center p-4 text-center text-slate-400">
-                          <Icons.ImageOff className="w-8 h-8 mb-2 text-slate-300" />
-                          <span className="font-medium text-xs">Görsel Yüklenemedi</span>
-                          <span className="text-[9px] mt-1 text-slate-400 font-mono break-all select-all">
+                          <Icons.ImageOff className="w-12 h-12 mb-2 text-slate-300" />
+                          <span className="font-semibold text-sm">Görsel Yüklenemedi</span>
+                          <span className="text-[10px] mt-2 text-slate-400 font-mono break-all select-all max-w-xs">
                             {selectedService.images[activeImageIdx]}
                           </span>
                         </div>
@@ -322,14 +324,14 @@ export default function ScreenSlider() {
                       <div className="flex gap-4 mt-4">
                         <button 
                           onClick={() => setActiveImageIdx(prev => prev > 0 ? prev - 1 : selectedService.images.length - 1)}
-                          className="p-1.5 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 text-[#475569] transition-colors"
+                          className="p-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 text-[#475569] transition-all shadow-sm"
                         >
                           <Icons.ChevronLeft className="w-4 h-4" />
                         </button>
-                        <span className="text-xs text-[#64748B] self-center font-medium">{activeImageIdx + 1} / {selectedService.images.length}</span>
+                        <span className="text-xs text-[#64748B] self-center font-bold tracking-wider">{activeImageIdx + 1} / {selectedService.images.length}</span>
                         <button 
                           onClick={() => setActiveImageIdx(prev => prev < selectedService.images.length - 1 ? prev + 1 : 0)}
-                          className="p-1.5 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 text-[#475569] transition-colors"
+                          className="p-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 text-[#475569] transition-all shadow-sm"
                         >
                           <Icons.ChevronRight className="w-4 h-4" />
                         </button>
@@ -341,19 +343,19 @@ export default function ScreenSlider() {
                 )}
               </div>
 
-              {/* SAĞ TARAF: DETAYLI ANLATIM METİNLERİ */}
-              <div className="flex-1 flex flex-col justify-between gap-4">
+              {/* SAĞ TARAF: DETAYLI ANLATIM METİNLERİ (flex-1) */}
+              <div className="flex-1 flex flex-col justify-between gap-6">
                 <div>
                   <span className="text-xs text-[#0077B6] font-bold tracking-wider block mb-1 uppercase">Modül Detayı</span>
-                  <h3 className="text-xl md:text-2xl font-black text-[#0F172A] mb-3">{selectedService.title}</h3>
-                  <p className="text-[#475569] text-xs md:text-sm font-light leading-relaxed mb-4 md:mb-6">{selectedService.longDesc}</p>
+                  <h3 className="text-2xl md:text-3xl font-black text-[#0F172A] mb-3 leading-tight">{selectedService.title}</h3>
+                  <p className="text-[#475569] text-xs md:text-sm font-light leading-relaxed mb-6">{selectedService.longDesc}</p>
 
-                  <div className="space-y-4 mb-4">
+                  <div className="space-y-4">
                     <div>
                       <h4 className="text-xs font-semibold text-[#334155] mb-2 flex items-center gap-1">
                         <Icons.Sliders className="w-3.5 h-3.5 text-[#0077B6]" /> Yetenekler ve Özellikler
                       </h4>
-                      <ul className="space-y-1.5 text-xs font-light text-[#475569]">
+                      <ul className="space-y-2 text-xs font-light text-[#475569]">
                         {selectedService.features.map((feat, i) => (
                           <li key={i} className="flex items-center gap-2">
                             <Icons.Check className="w-3.5 h-3.5 text-[#16A34A] shrink-0" />
@@ -372,14 +374,14 @@ export default function ScreenSlider() {
 
                 {/* Alt Aksiyon Alanı */}
                 <div className="flex items-center justify-between pt-4 border-t border-slate-100 gap-2">
-                  <span className="text-[9px] md:text-[10px] text-[#94A3B8] font-medium shrink-0">14 Gün Demo • Koşulsuz İptal</span>
+                  <span className="text-[10px] md:text-[11px] text-[#94A3B8] font-semibold shrink-0">14 Gün Demo • Koşulsuz İptal</span>
                   <button
                     onClick={() => {
                       setReferredModule(selectedService.title);
                       setSelectedService(null);
                       setCurrentScreen(2); 
                     }}
-                    className="px-4 py-2 bg-[#0F172A] text-white font-bold rounded-xl text-xs hover:bg-[#00B4D8] transition-colors shadow-sm"
+                    className="px-5 py-3 bg-[#0F172A] text-white font-bold rounded-xl text-xs hover:bg-[#00B4D8] transition-colors shadow-md"
                   >
                     {selectedService.ctaText} →
                   </button>
