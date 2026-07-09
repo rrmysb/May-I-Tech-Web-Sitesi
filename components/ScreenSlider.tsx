@@ -11,6 +11,10 @@ export default function ScreenSlider() {
   const [activeImageIdx, setActiveImageIdx] = useState(0); 
   const [isAnimating, setIsAnimating] = useState(false);
 
+  // Görsel yüklenme ve hata durum takibi
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+
   // Mobil Dokunmatik Algılama Koordinatları
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
@@ -22,6 +26,12 @@ export default function ScreenSlider() {
   const [referredModule, setReferredModule] = useState("Genel İletişim / Tümü");
   const [formStatus, setFormStatus] = useState<{ type: "success" | "error" | null; msg: string }>({ type: null, msg: "" });
   const [loading, setLoading] = useState(false);
+
+  // Resim veya servis değiştiğinde yüklenme durumlarını sıfırla
+  useEffect(() => {
+    setImageLoading(true);
+    setImageError(false);
+  }, [activeImageIdx, selectedService]);
 
   useEffect(() => {
     if (selectedService) return;
@@ -43,9 +53,30 @@ export default function ScreenSlider() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [currentScreen, isAnimating, selectedService]);
 
+  // GitHub Pages alt klasör (base path) uyumluluk fonksiyonu
+  const getImagePath = (path: string) => {
+    if (!path) return "";
+    if (path.startsWith("http")) return path; // Dış bağlantı ise dokunma
+    
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      const pathname = window.location.pathname; // örn: /May-I-Tech-Web-Sitesi/
+      
+      // Eğer site github.io üzerinde barındırılıyorsa alt klasörü otomatik tespit et
+      if (hostname.includes("github.io")) {
+        const repoName = pathname.split("/")[1];
+        if (repoName) {
+          const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+          return `/${repoName}/${cleanPath}`;
+        }
+      }
+    }
+    return path;
+  };
+
   // Mobil Swipe Algılama Mantığı
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (selectedService) return; // Modal açıksa ekran geçişini engelle
+    if (selectedService) return; 
     setTouchStartY(e.touches[0].clientY);
     setTouchStartX(e.touches[0].clientX);
   };
@@ -59,15 +90,12 @@ export default function ScreenSlider() {
     const diffY = touchStartY - touchEndY;
     const diffX = touchStartX - touchEndX;
 
-    // Sadece dikey kaydırma dikey ekran geçişini tetikler (Yatay kart kaydırmayı engellemez)
     if (Math.abs(diffY) > Math.abs(diffX)) {
-      if (Math.abs(diffY) > 50) { // Kaydırma hassasiyet limiti
+      if (Math.abs(diffY) > 50) { 
         if (diffY > 0 && currentScreen < 3) {
-          // Yukarı Swipe -> Sonraki Ekran
           setIsAnimating(true);
           setCurrentScreen((prev) => prev + 1);
         } else if (diffY < 0 && currentScreen > 0) {
-          // Aşağı Swipe -> Önceki Ekran
           setIsAnimating(true);
           setCurrentScreen((prev) => prev - 1);
         }
@@ -110,7 +138,6 @@ export default function ScreenSlider() {
       onTouchEnd={handleTouchEnd}
       className="relative w-screen h-[100dvh] overflow-hidden bg-[#F8FAFC] text-[#0F172A] font-sans select-none"
     >
-      {/* Scrollbar gizleme için ufak inline CSS */}
       <style jsx global>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -161,12 +188,10 @@ export default function ScreenSlider() {
               İşletmenizi Değiştirecek <span className="text-[#0077B6]">Modüller</span>
             </h2>
             
-            {/* Mobil Bilgilendirme İpucu */}
-            <p className="text-[11px] text-[#0077B6] mb-4 md:hidden animate-pulse flex items-center gap-1">
+            <p className="text-[11px] text-[#00B4D8] mb-4 md:hidden animate-pulse flex items-center gap-1">
               ← Modülleri Görmek İçin Yana Kaydırın →
             </p>
 
-            {/* Mobilde Yatay Karosel (Scroll), Masaüstünde 5 Sütunlu Izgara */}
             <div className="flex md:grid md:grid-cols-5 gap-5 max-w-7xl w-full overflow-x-auto md:overflow-x-visible snap-x snap-mandatory no-scrollbar px-4 md:px-0 pb-8 md:pb-0">
               {MAYITECH_SERVICES.map((service) => {
                 const IconComponent = (Icons as any)[service.icon] || Icons.HelpCircle;
@@ -261,15 +286,35 @@ export default function ScreenSlider() {
                 {selectedService.images && selectedService.images.length > 0 ? (
                   <div className="w-full h-full flex flex-col items-center justify-center relative">
                     <div className="w-full h-40 md:h-44 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-xs text-slate-400 overflow-hidden relative shadow-sm">
-                      <img 
-                        src={selectedService.images[activeImageIdx]} 
-                        alt={`${selectedService.title} Arayüz`} 
-                        className="object-cover w-full h-full"
-                        onError={(e)=>{e.currentTarget.style.display='none'}}
-                      />
-                      <span className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50 font-light p-4 text-center">
-                        [Arayüz: {selectedService.images[activeImageIdx]}]
-                      </span>
+                      
+                      {/* Spinner Yüklenme Animasyonu */}
+                      {imageLoading && !imageError && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-slate-50 z-10">
+                          <Icons.Loader2 className="w-6 h-6 animate-spin text-[#00B4D8]" />
+                        </div>
+                      )}
+
+                      {/* Ana Görsel Elementi */}
+                      {!imageError ? (
+                        <img 
+                          src={getImagePath(selectedService.images[activeImageIdx])} 
+                          alt={`${selectedService.title} Arayüz`} 
+                          className="object-cover w-full h-full"
+                          onLoad={() => setImageLoading(false)}
+                          onError={() => {
+                            setImageError(true);
+                            setImageLoading(false);
+                          }}
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center p-4 text-center text-slate-400">
+                          <Icons.ImageOff className="w-8 h-8 mb-2 text-slate-300" />
+                          <span className="font-medium text-xs">Görsel Yüklenemedi</span>
+                          <span className="text-[9px] mt-1 text-slate-400 font-mono break-all select-all">
+                            {selectedService.images[activeImageIdx]}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Yatay Geçiş Okları */}
@@ -332,7 +377,7 @@ export default function ScreenSlider() {
                     onClick={() => {
                       setReferredModule(selectedService.title);
                       setSelectedService(null);
-                      setCurrentScreen(2); // Form sayfasına uçurur
+                      setCurrentScreen(2); 
                     }}
                     className="px-4 py-2 bg-[#0F172A] text-white font-bold rounded-xl text-xs hover:bg-[#00B4D8] transition-colors shadow-sm"
                   >
