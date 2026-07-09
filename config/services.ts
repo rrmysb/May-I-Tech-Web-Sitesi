@@ -20,7 +20,7 @@ export const MAYITECH_SERVICES: ServiceDetail[] = [
     ctaText: "14 Gün Ücretsiz Deneyin",
     icon: "Calendar",
     setupTime: "5 Dakika",
-    images: ["/images/rezervasyon-1.png", "/images/rezervasyon-2.png"] // Örnek görsel yolları
+    images: ["/images/shine_islem_secimi.png", "/images/shine_randevu_kayit.png"] // Örnek görsel yolları
   },
   {
     id: "kasa",
