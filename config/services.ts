@@ -6,8 +6,8 @@ export interface ServiceDetail {
   features: string[];
   ctaText: string;
   icon: string;
-  setupTime: string; // Her modülün kurulum süresi farklı olabilmeli
-  images: string[];   // Uygulama arayüz görsellerinin yolları (public/ klasörüne ekleyeceksin)
+  setupTime: string; 
+  images: string[]; 
 }
 
 export const MAYITECH_SERVICES: ServiceDetail[] = [
@@ -20,7 +20,7 @@ export const MAYITECH_SERVICES: ServiceDetail[] = [
     ctaText: "14 Gün Ücretsiz Deneyin",
     icon: "Calendar",
     setupTime: "5 Dakika",
-    images: ["/images/shine_islem_secimi.png", "/images/shine_randevu_kayit.png","/images/shine_admin.png","/images/shine_admin_calisan.png"] // Örnek görsel yolları
+    images: ["/images/shine_islem_secimi.png", "/images/shine_randevu_kayit.png","/images/shine_admin.png",] 
   },
   {
     id: "kasa",

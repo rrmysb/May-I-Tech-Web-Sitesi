@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# May I Tech: Bütünleşik B2B ERP, POS ve Rezervasyon Ekosistemi
 
-## Getting Started
+Perakende, lojistik ve hizmet sektöründeki kurumsal işletmelerin uçtan uca dijital dönüşüm süreçlerini yönetmek amacıyla geliştirilmiş, katmanlı yazılım mimarisine sahip bütünleşik bir B2B SaaS platformudur. 
 
-First, run the development server:
+Ekosistem; işletmelerin finansal operasyonlarını, anlık envanter hareketlerini, tedarik zincirlerini ve müşteri randevularını tek bir merkezden senkronize bir şekilde yönetmesini sağlar.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🌐 **Canlı Web Sitesi:** [https://rrmysb.github.io/May-I-Tech-Web-Sitesi/](https://rrmysb.github.io/May-I-Tech-Web-Sitesi/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Ekosistem Modülleri ve Çözümleri
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📊 1. ERP Tabanlı Akıllı Envanter Yönetimi
+Perakende sektöründeki lojistik ve envanter darboğazlarını çözmek amacıyla tasarlanmıştır. Manuel stok takibinden ve operasyonel gecikmelerden kaynaklanan finansal kayıpları proaktif olarak önler.
+- Nesne Yönelimli Programlama (OOP) prensipleriyle kurgulanmış esnek altyapı.
+- Dinamik ilişkisel veri tabanı entegrasyonu ve anlık akıllı envanter güncellemeleri.
+- Tedarik zinciri aksamalarını önleyen merkezi tedarikçi arama ve filtreleme modülleri.
 
-## Learn More
+### 💳 2. Kasa / POS Terminali Sistemi
+İşletmelerin sıcak satış operasyonlarını ve nakit akışlarını güvence altına alan mali modüldür.
+- Satış anında stok miktarlarını ERP modülüyle eş zamanlı (real-time) düşüren senkronize mimari.
+- Kullanıcı dostu, hızlı ve hatasız işlem yapmaya odaklı POS arayüzü tasarımı.
 
-To learn more about Next.js, take a look at the following resources:
+### 📅 3. Dinamik Rezervasyon ve Randevu Motoru
+Hizmet sektöründe faaliyet gösteren işletmelerin doluluk oranlarını ve zaman çizelgelerini optimize eden zamanlayıcı modülüdür.
+- Müşteri randevularını çakışmasız ve otonom olarak yöneten takvim algoritması.
+- Müşteri ve hizmet bazlı dinamik kapasite ve zaman yönetimi entegrasyonu.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🌐 4. Resmi Tanıtım & Vitrin Web Platformu
+May I Tech ekosisteminin tüm B2B modüllerini, mimari kabiliyetlerini ve teknoloji hiyerarşisini kurumsal müşterilere interaktif olarak sunan resmi web platformudur.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠️ Teknolojik Altyapı & Mimari Standartlar
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Ekosistemin masaüstü ve web bacaklarında modern yazılım mühendisliği pratikleri uygulanmıştır:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* **Masaüstü & Sistem Yönetimi:** Python, CustomTkinter (Gelişmiş UI/UX), Katmanlı Yazılım Mimarisi (Layered Architecture), OOP, İlişkisel Veri Tabanı Yönetimi.
+* **Web Platformu (Vitrin):** Next.js (React Framework), TypeScript, Semantic HTML5, Modern CSS3, Mobil Uyumlu (Responsive) Tasarım Prensipleri.

@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, phone, message, selectedModule } = body;
 
-    // Basit bir validation (Doğrulama)
+    // Basit doğrulama
     if (!name || !phone) {
       return NextResponse.json({ error: "Ad ve telefon alanları zorunludur." }, { status: 400 });
     }
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       tarih: new Date().toISOString()
     };
 
-    // Proje içinde 'basvurular.json' dosyasına kaydedeceğiz
+    // 'basvurular.json' dosyasına kaydedeceğiz
     const filePath = path.join(process.cwd(), "basvurular.json");
     
     let mevcutBasvurular = [];
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     // Yeni başvuruyu listenin en başına ekle
     mevcutBasvurular.unshift(yeniBasvuru);
 
-    // Dosyayı güncelle
+    // güncelle
     fs.writeFileSync(filePath, JSON.stringify(mevcutBasvurular, null, 2), "utf-8");
 
     return NextResponse.json({ success: true, message: "Başvurunuz başarıyla kaydedildi!" });

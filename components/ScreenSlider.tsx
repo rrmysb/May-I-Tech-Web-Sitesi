@@ -11,15 +11,15 @@ export default function ScreenSlider() {
   const [activeImageIdx, setActiveImageIdx] = useState(0); 
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // Görsel yüklenme ve hata durum takibi
+
+  
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
 
-  // Mobil Dokunmatik Algılama Koordinatları
+   
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
-  // Form State'leri
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
@@ -27,7 +27,7 @@ export default function ScreenSlider() {
   const [formStatus, setFormStatus] = useState<{ type: "success" | "error" | null; msg: string }>({ type: null, msg: "" });
   const [loading, setLoading] = useState(false);
 
-  // Resim veya servis değiştiğinde yüklenme durumlarını sıfırla
+
   useEffect(() => {
     setImageLoading(true);
     setImageError(false);
@@ -53,16 +53,15 @@ export default function ScreenSlider() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [currentScreen, isAnimating, selectedService]);
 
-  // GitHub Pages alt klasör (base path) uyumluluk fonksiyonu
   const getImagePath = (path: string) => {
     if (!path) return "";
-    if (path.startsWith("http")) return path; // Dış bağlantı ise dokunma
+    if (path.startsWith("http")) return path; 
     
     if (typeof window !== "undefined") {
       const hostname = window.location.hostname;
-      const pathname = window.location.pathname; // örn: /May-I-Tech-Web-Sitesi/
+      const pathname = window.location.pathname; 
       
-      // Eğer site github.io üzerinde barındırılıyorsa alt klasörü otomatik tespit et
+    
       if (hostname.includes("github.io")) {
         const repoName = pathname.split("/")[1];
         if (repoName) {
@@ -74,7 +73,7 @@ export default function ScreenSlider() {
     return path;
   };
 
-  // Mobil Swipe Algılama Mantığı
+
   const handleTouchStart = (e: React.TouchEvent) => {
     if (selectedService) return; 
     setTouchStartY(e.touches[0].clientY);
