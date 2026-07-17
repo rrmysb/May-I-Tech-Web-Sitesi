@@ -1,6 +1,6 @@
 # May I Tech: Bütünleşik B2B ERP, POS ve Rezervasyon Ekosistemi
 
-Perakende, lojistik ve hizmet sektöründeki kurumsal işletmelerin uçtan uca dijital dönüşüm süreçlerini yönetmek amacıyla geliştirilmiş, katmanlı yazılım mimarisine sahip bütünleşik bir B2B SaaS platformudur. 
+Perakende, lojistik ve hizmet sektöründeki kurumsal işletmelerin uçtan uca dijital dönüşüm süreçlerini yönetmek amacıyla geliştirilmiş, katmanlı yazılım mimarisine sahip bütünleşik bir B2B SaaS platformudur. Şu an web sitesi ve içindeki modüller geliştirilme aşamasındadır.
 
 Ekosistem; işletmelerin finansal operasyonlarını, anlık envanter hareketlerini, tedarik zincirlerini ve müşteri randevularını tek bir merkezden senkronize bir şekilde yönetmesini sağlar.
 
